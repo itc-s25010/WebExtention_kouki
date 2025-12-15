@@ -1,0 +1,13 @@
+form input[type="text"],
+form input[type="tel"],
+form input[type="password"],
+form input[type="email"],
+form select,
+form input[type="submit"] {
+    display: block;
+    margin-bottom: 10px;
+    width: 250px;
+}
+.radio-group input {
+    display: inline;
+}

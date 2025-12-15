@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>会員登録画面</title>
+        <meta name="description" content="">
+    <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <form>
+        <input type="text" placeholder="ID">
+        <input type="text" placeholder="名前">
+        <input type="text" placeholder="〒郵便番号">
+        <input type="text" placeholder="住所">
+        <input type="text" placeholder="電話番号">
+        <input type="text" placeholder="パスワード">
+        <input type="text" placeholder="Emain">
+        <select name="role">
+            <option value="admin">管理者</option>
+            <option value="user">一般</option>
+            </select>
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="status" value="有効"> 有効
+                    </label>
+                    <label>
+                <input type="radio" name="status" value="無効" checked> 無効
+                    </label>
+        </div>
+        <input type="submit" value="登録">
+       </form>
+  </body>
+</html>
