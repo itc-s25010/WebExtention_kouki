@@ -1,53 +1,113 @@
+
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
-  </head>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/style.css">
+  <title>商品登録</title>
+</head>
 
-  <body class="page-Registration">
-    <header>
-      <nav> <a href="#">HOME</a></nav>
-    </header>
-    <main>
-      <section class="hero">
-        <div class="photo-area">
-          <label class="photo-label">
-            <input type="file" accept="image/*" id="photoInput">
-            <span>写真を選択</span>
-          </label>
-          <img id="preview">
-        </div>
-      </section>
-      <section class="Product-Registration">
-        <h1>Product Name</h1>
-        <input type="text" placeholder="">
-        <h1>Price(v):</h1>
-        <input type="text" placeholder="">
-        <h1>Product Description</h1>
-        <textarea placeholder="Enter detailed product description here..." rows="4"></textarea>
-        <input type="submit" value="Add product">
-      </section>
-      <footer>
+<body>
+  <header class="navbar">
+    <ul>
+      <li><a href="#">HOME</a></li>
+      <li><a href="list.html">SHOP</a></li>
+      <li><a href="#">ABOUT</a></li>
+    </ul>
+  </header>
+<main class="container">
 
-      </footer>
+<div class="upload-wrapper">
+  <label for="image" class="upload-area">
+    <p class="upload-title">Product Image(s) Upload Area</p>
+    <span class="upload-btn">Upload Images</span>
+    <img id="preview" class="preview-img" />
+  </label>
 
-    </main>
+  <input type="file" id="image" name="image" accept="image/*" multiple>
+</div>
 
-    <div class="Reg">
-      <input type="text" placeholder="">
-    </div>
-    <div class="Rogin">
-      <a href="#">HOME</a>
-      <a href="#">SHOP</a>
-      <a href="#">ABOUT</a>    
-    </div>
+<form action="list.html" method="post" id="productForm" class="product-form">
 
+  <div class="form-group">
+    <label>Product Name</label>
+    <input type="text" name="name">
+  </div>
 
+  <div class="form-group">
+    <label>Price (¥)</label>
+    <input type="number" name="price">
+  </div>
 
-    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-  </body>
+  <div class="form-group">
+    <label>Product Description</label>
+    <textarea name="desc" rows="4"></textarea>
+  </div>
+
+  <button class="submit-btn" type="submit">Add Product</button>
+
+</form>
+  </main>
+
+<footer class="footer">
+    <p>© 2023 Your Store. All Rights Reserved.</p>
+    <p>Privacy Policy | Terms of Service</p>
+    <p>宮城 海 / 学籍番号: XXXXXXXX</p>
+  </footer>
+
+  <script>
+document.getElementById("productForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const name = document.querySelector("input[name='name']").value;
+  const price = document.querySelector("input[name='price']").value;
+  const desc = document.querySelector("textarea[name='desc']").value;
+
+  const imageFile = document.getElementById("image").files[0];
+
+  if(!imageFile){
+    alert("画像を選択してください");
+    return;
+  }
+
+  const reader = new FileReader();
+
+  reader.onload = function(event){
+
+  const product = {
+    name: name,
+    price: price,
+    desc: desc,
+    image: event.target.result
+  };
+
+  let products = JSON.parse(localStorage.getItem("products")) || [];
+  products.push(product);
+
+  localStorage.setItem("products", JSON.stringify(products));
+
+  window.location.href = "list.html";
+};
+
+reader.readAsDataURL(imageFile);
+});
+
+document.getElementById("image").addEventListener("change", function(){
+
+  const file = this.files[0];
+  if(!file) return;
+
+  const reader = new FileReader();
+
+  reader.onload = function(e){
+    const preview = document.getElementById("preview");
+    preview.src = e.target.result;
+    preview.style.display = "block";
+  };
+
+  reader.readAsDataURL(file);
+});
+</script>
+</body>
 </html>
